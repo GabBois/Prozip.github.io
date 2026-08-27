@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Selector : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Selector : MonoBehaviour
 
     void CheckSelectable()
     {
-        if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), mask))
+        if (Physics.Raycast(cam.ScreenPointToRay(Mouse.current.position.value), out hit,10f,mask))
         {
             Debug.Log(hit.collider.gameObject.name);
         }
