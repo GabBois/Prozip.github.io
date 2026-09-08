@@ -11,6 +11,7 @@ public class ThemeManager : MonoBehaviour
     private void Start()
     {
         activeTheme = themePanelList[0].GetComponent<Theme>();
+        activeTheme.Initialise();
     }
 
     public void OpenTheme(int _index)

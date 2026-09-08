@@ -64,6 +64,7 @@ public class Theme : MonoBehaviour
         for (int i = 0; i < nodeList.Count; i++)
         {
             nodeList[i].SetActive(true);
+            nodeList[i].GetComponent<NodeBehaviour>().InitializeNode();
             yield return new WaitForSeconds(nodeEnablingDuration);
         }
         yield return null;
