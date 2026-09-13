@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
         if (_value.isPressed && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            animator.SetTrigger(JumpHash);
         }
     }
     
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour
         movement = camForward.normalized * zAxis + camRight.normalized * xAxis;
 
         isMoving = movement.magnitude > 0.1f && isGrounded;
-        // animator.SetBool(IsMovingHash, isMoving);
+        animator.SetBool(IsMovingHash, isMoving);
 
         if(movement.magnitude > 0.1f)
         {
