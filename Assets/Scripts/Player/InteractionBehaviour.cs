@@ -10,12 +10,21 @@ public class InteractionBehaviour : MonoBehaviour
     [SerializeField] private LayerMask interactableLayer;
     private RaycastHit hit;
     IInteractable interactable;
+    private IInteractable activeIObject;
 
     void OnInteract(InputValue _value)
     {
-        if (interactable != null)
+        if (interactable != null && activeIObject == null)
         {
             interactable.Interact();
+            activeIObject = interactable;
+            return;
+        }
+
+        if (activeIObject != null)
+        {
+            activeIObject.CancelInteraction();
+            activeIObject = null;
         }
     }
     

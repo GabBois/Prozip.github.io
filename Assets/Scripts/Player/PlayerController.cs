@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool isMoving;
     private bool isJumping;
+    private bool enableMovement = true;
 
     private float xAxis, zAxis;
     private Vector2 moveInput;
@@ -33,6 +35,28 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+    }
+
+    private void Start()
+    {
+        GameEvents.OnInteractionStarted += DisableMovement;
+        GameEvents.OnInteractionEnded += EnableMovement;
+    }
+
+    private void EnableMovement()
+    {
+        enableMovement = true;
+    }
+
+    private void DisableMovement()
+    {
+        enableMovement = false;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnInteractionStarted -= DisableMovement;
+        GameEvents.OnInteractionEnded -= EnableMovement;
     }
 
     private void OnMove(InputValue _value)
@@ -57,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
+        if (!enableMovement) return;
         isGrounded = controller.isGrounded;
 
         xAxis = moveInput.x;

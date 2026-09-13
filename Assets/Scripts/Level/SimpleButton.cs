@@ -24,4 +24,9 @@ public class SimpleButton : MonoBehaviour, IInteractable
     {
         Debug.Log($"[SimpleButton] T'as appuyé wesshhhh");
     }
+
+    public void CancelInteraction()
+    {
+        throw new NotImplementedException();
+    }
 }
