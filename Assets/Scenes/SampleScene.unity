@@ -1142,6 +1142,8 @@ MonoBehaviour:
   cam: {fileID: 597693702}
   interactTextObject: {fileID: 934923298}
   anim: {fileID: 640799509}
+  canvasObject: {fileID: 246710393}
+  buttonObjects: []
   waitBeforeOpenDuration: 0.75
 --- !u!4 &640799507
 Transform:

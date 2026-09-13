@@ -8,6 +8,7 @@ public class Sign : MonoBehaviour, IInteractable
     [SerializeField] private CinemachineCamera cam;
     [SerializeField] private GameObject interactTextObject;
     [SerializeField] private Animator anim;
+    [SerializeField] private GameObject canvasObject;
 
     [SerializeField] private float waitBeforeOpenDuration;
     
@@ -17,6 +18,7 @@ public class Sign : MonoBehaviour, IInteractable
     private void Start()
     {
         interactTextObject.SetActive(false);
+        canvasObject.SetActive(false);
     }
 
     public void ShowInfos()
@@ -41,10 +43,16 @@ public class Sign : MonoBehaviour, IInteractable
         anim.SetTrigger(OpenTriggerHash);
     }
 
+    public void ShowCanvas()
+    {
+        canvasObject.SetActive(true);
+    }
+
     public void CancelInteraction()
     {
         cam.Priority = 0;
         GameEvents.TriggerInteractionEnded();
         anim.SetTrigger(CloseTriggerHash);
+        canvasObject.SetActive(false);
     }
 }
