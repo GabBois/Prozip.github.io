@@ -10,6 +10,8 @@ public class SimpleButton : MonoBehaviour, IInteractable
         infoObject.SetActive(false);
     }
 
+    public bool Cancelable { get; set; } = false;
+
     public void ShowInfos()
     {
         infoObject.SetActive(true);
@@ -27,6 +29,6 @@ public class SimpleButton : MonoBehaviour, IInteractable
 
     public void CancelInteraction()
     {
-        throw new NotImplementedException();
+        
     }
 }

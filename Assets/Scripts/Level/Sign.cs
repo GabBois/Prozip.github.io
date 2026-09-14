@@ -9,6 +9,7 @@ public class Sign : MonoBehaviour, IInteractable
     [SerializeField] private GameObject interactTextObject;
     [SerializeField] private Animator anim;
     [SerializeField] private GameObject canvasObject;
+    [SerializeField] private GameObject[] buttonObjects;
 
     [SerializeField] private float waitBeforeOpenDuration;
     
@@ -19,7 +20,13 @@ public class Sign : MonoBehaviour, IInteractable
     {
         interactTextObject.SetActive(false);
         canvasObject.SetActive(false);
+        foreach (GameObject o in buttonObjects)
+        {
+            o.SetActive(false);
+        }
     }
+
+    public bool Cancelable { get; set; } = true;
 
     public void ShowInfos()
     {

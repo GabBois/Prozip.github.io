@@ -31,7 +31,13 @@ public class PlayerController : MonoBehaviour
 
     private readonly int IsMovingHash = Animator.StringToHash("IsWalking");
     private readonly int JumpHash = Animator.StringToHash("Jump");
-
+    
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void Init()
+    {
+        InputSystem.actions.Enable();
+    }
+    
     private void Awake()
     {
         controller = GetComponent<CharacterController>();

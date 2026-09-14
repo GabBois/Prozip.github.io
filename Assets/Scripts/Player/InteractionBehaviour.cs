@@ -21,7 +21,7 @@ public class InteractionBehaviour : MonoBehaviour
             return;
         }
 
-        if (activeIObject != null)
+        if (activeIObject != null && activeIObject.Cancelable)
         {
             activeIObject.CancelInteraction();
             activeIObject = null;
