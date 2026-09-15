@@ -12,8 +12,24 @@ public class InteractionBehaviour : MonoBehaviour
     IInteractable interactable;
     private IInteractable activeIObject;
 
+    private IInteractable triggeredIObject;
+
+    public void RegisterTriggeredInteractable(IInteractable interactable)
+    {
+        triggeredIObject = interactable;
+    }
+
+    public void UnregisterTriggeredInteractable()
+    {
+        triggeredIObject = null;
+    }
+
     void OnInteract(InputValue _value)
     {
+        if (interactable == null && triggeredIObject != null)
+        {
+            triggeredIObject.Interact();
+        }
         if (interactable != null && activeIObject == null)
         {
             interactable.Interact();

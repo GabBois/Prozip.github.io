@@ -1,11 +1,12 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Orbe : Grabbable, IInteractable
 {
     [SerializeField] private GameObject interactTextObject;
-    [SerializeField] private Collider collider;
+    [FormerlySerializedAs("collider")] [SerializeField] private Collider col;
     [SerializeField] private Rigidbody rb;
     public bool Cancelable { get; set; }
     
@@ -36,13 +37,13 @@ public class Orbe : Grabbable, IInteractable
 
     public override void EnableGrabbing()
     {
-        collider.enabled = false;
+        col.enabled = false;
         rb.isKinematic = true;
     }
 
     public override void DisableGrabbing()
     {
-        collider.enabled = true;
+        col.enabled = true;
         rb.isKinematic = false;
     }
 

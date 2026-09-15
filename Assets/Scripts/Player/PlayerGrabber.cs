@@ -11,6 +11,7 @@ public class PlayerGrabber : MonoBehaviour
     [SerializeField] private float timeToGrab;
     
     private Grabbable objectToGrab;
+    public Grabbable ObjectToGrab => objectToGrab;
     private bool isGrabbing;
 
     public void GetObjectToGrab(Grabbable _obj)

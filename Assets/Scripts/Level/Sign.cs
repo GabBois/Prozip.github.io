@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Sign : MonoBehaviour, IInteractable
 {
+    [SerializeField] private bool isActiveByDefault;
+    [Space]
     [Header("References")]
     [SerializeField] private CinemachineCamera cam;
     [SerializeField] private GameObject interactTextObject;
@@ -15,6 +17,9 @@ public class Sign : MonoBehaviour, IInteractable
     
     readonly int OpenTriggerHash = Animator.StringToHash("Open");
     readonly int CloseTriggerHash = Animator.StringToHash("Close");
+    readonly int IsActiveHash = Animator.StringToHash("IsActive");
+
+    private bool isActive;
     
     private void Start()
     {
@@ -24,10 +29,25 @@ public class Sign : MonoBehaviour, IInteractable
         {
             o.SetActive(false);
         }
+        
+        isActive = isActiveByDefault;
+        anim.SetBool(IsActiveHash, isActive);
     }
 
     public bool Cancelable { get; set; } = true;
 
+    public void Activate()
+    {
+        isActive = true;
+        anim.SetBool(IsActiveHash, isActive);
+    }
+
+    public void Deactivate()
+    {
+        isActive = false;
+        anim.SetBool(IsActiveHash, isActive);
+    }
+    
     public void ShowInfos()
     {
         interactTextObject.SetActive(true);
@@ -40,6 +60,11 @@ public class Sign : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if (!isActive)
+        {
+            Debug.Log("No energy...");
+            return;
+        }
         cam.Priority = 11;
         GameEvents.TriggerInteractionStarted();
         Invoke(nameof(PlayOpen), waitBeforeOpenDuration);
