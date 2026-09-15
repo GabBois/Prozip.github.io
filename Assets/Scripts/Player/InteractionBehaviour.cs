@@ -32,7 +32,7 @@ public class InteractionBehaviour : MonoBehaviour
     {
         if (Physics.Raycast(rayPoint.position, rayPoint.forward, out hit, maxDistance, layerMask: interactableLayer))
         {
-            interactable = hit.collider.GetComponent<IInteractable>();
+            hit.collider.TryGetComponent(out interactable);
             interactable?.ShowInfos();
         }
         else if(interactable != null)
