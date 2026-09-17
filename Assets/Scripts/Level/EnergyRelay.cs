@@ -1,17 +1,20 @@
 using System;
 using System.Threading.Tasks;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class EnergyRelay : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject interactTextObject;
     [SerializeField] private Transform sourcePoint;
+    [SerializeField] private Focusable focusable;
     [SerializeField] private float sourceRadius;
 
     [Header("-[ Drop Sequence ]- ")]
     [SerializeField] private float dropTime;
     [SerializeField] private float sleepTimeBeforeActivation;
     [SerializeField] private float energyUpdateTime;
+    [SerializeField] private float sleepTimeAfterActivation;
 
     private PlayerGrabber grabber;
     private EnergySource currentSource;
@@ -86,10 +89,20 @@ public class EnergyRelay : MonoBehaviour, IInteractable
 
     private async void DropSourceSequence()
     {
-        await PlaceSourceSequence();
-        await Task.Delay(Mathf.RoundToInt(sleepTimeBeforeActivation * 1000f));
+        try
+        {
+            focusable.Focus();
+            await PlaceSourceSequence();
+            await Task.Delay(Mathf.RoundToInt(sleepTimeBeforeActivation * 1000f));
 
-        await EnhanceSourceSequence();
+            await EnhanceSourceSequence();
+            await Task.Delay(Mathf.RoundToInt(sleepTimeAfterActivation * 1000f));
+            focusable.Unfocus();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
     }
 
     private async Task PlaceSourceSequence()
