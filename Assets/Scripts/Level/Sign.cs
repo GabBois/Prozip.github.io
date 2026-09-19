@@ -2,7 +2,7 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class Sign : MonoBehaviour, IInteractable
+public class Sign : MonoBehaviour, IInteractable, IReceiver
 {
     [SerializeField] private bool isActiveByDefault;
     [Space]

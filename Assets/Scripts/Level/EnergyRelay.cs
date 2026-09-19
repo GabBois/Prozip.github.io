@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEditorInternal;
 using UnityEngine;
@@ -6,14 +7,19 @@ using UnityEngine;
 public class EnergyRelay : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject interactTextObject;
+    [SerializeField] private BoxCollider headCol;
     [SerializeField] private Transform sourcePoint;
     [SerializeField] private Focusable focusable;
     [SerializeField] private float sourceRadius;
 
     [Header("-[ Drop Sequence ]- ")]
     [SerializeField] private float dropTime;
+
+    [SerializeField] private AnimationCurve dropCurve;
     [SerializeField] private float sleepTimeBeforeActivation;
     [SerializeField] private float energyUpdateTime;
+    [SerializeField] private AnimationCurve energyUpdateCurve;
+    
     [SerializeField] private float sleepTimeAfterActivation;
 
     private PlayerGrabber grabber;
@@ -22,6 +28,11 @@ public class EnergyRelay : MonoBehaviour, IInteractable
     private void Start()
     {
         interactTextObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -82,32 +93,34 @@ public class EnergyRelay : MonoBehaviour, IInteractable
             {
                 currentSource = grabber.ObjectToGrab.GetComponentInChildren<EnergySource>();
                 grabber.ObjectToGrab.EnableGrabbing();
-                DropSourceSequence();
+                StartCoroutine(nameof(DropSourceSequence));
             }
         }
     }
 
-    private async void DropSourceSequence()
+    private IEnumerator DropSourceSequence()
     {
-        try
-        {
-            focusable.Focus();
-            await PlaceSourceSequence();
-            await Task.Delay(Mathf.RoundToInt(sleepTimeBeforeActivation * 1000f));
-
-            await EnhanceSourceSequence();
-            await Task.Delay(Mathf.RoundToInt(sleepTimeAfterActivation * 1000f));
-            focusable.Unfocus();
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-        }
+        focusable.Focus();
+        headCol.enabled = false;
+        yield return PlaceSourceSequence();
+        
+        headCol.enabled = true;
+        yield return new WaitForSeconds(sleepTimeBeforeActivation);
+        
+        yield return EnhanceSourceSequence();
+        
+        yield return new WaitForSeconds(sleepTimeAfterActivation);
+        
+        focusable.Unfocus();
     }
 
-    private async Task PlaceSourceSequence()
+    private IEnumerator PlaceSourceSequence()
     {
         Transform sourceTransform = grabber.ObjectToGrab.transform;
+        Vector3 sourcePos = sourceTransform.position;
+        Rigidbody rb = sourceTransform.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+        Debug.Log(rb.isKinematic);
         if (sourceTransform.parent != null)
         {
             sourceTransform.parent = null;
@@ -115,23 +128,29 @@ public class EnergyRelay : MonoBehaviour, IInteractable
         float elapsedTime = 0;
         while (elapsedTime < dropTime)
         {
-            sourceTransform.position = Vector3.Lerp(sourceTransform.position, sourcePoint.position, elapsedTime / dropTime);
+            rb.isKinematic = true;
             elapsedTime += Time.deltaTime;
-            await Task.Yield();
+            float normalizedTime = Mathf.Clamp01(elapsedTime / dropTime);
+            float curved = dropCurve.Evaluate(normalizedTime);
+            rb.MovePosition(Vector3.Lerp(sourcePos, sourcePoint.position, curved));
+            
+            yield return null;
         }
         sourceTransform.position = sourcePoint.position;
     }
 
-    private async Task EnhanceSourceSequence()
+    private IEnumerator EnhanceSourceSequence()
     {
         float baseRadius = currentSource.BaseSourceRadius;
         float elapsedTime = 0;
         while (elapsedTime < energyUpdateTime)
         {
-            baseRadius = Mathf.Lerp(baseRadius, sourceRadius, elapsedTime / energyUpdateTime);
+            float normalizedTime = Mathf.Clamp01(elapsedTime / energyUpdateTime);
+            float curved = energyUpdateCurve.Evaluate(normalizedTime);
+            baseRadius = Mathf.Lerp(currentSource.BaseSourceRadius, sourceRadius, curved);
             currentSource.UpdateSourceRadius(baseRadius);
             elapsedTime += Time.deltaTime;
-            await Task.Yield();
+            yield return null;
         }
     }
     

@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 935902325203175841}
   - component: {fileID: 5971427874261358145}
   m_Layer: 0
-  m_Name: DestinationPoint (1)
+  m_Name: HeadCol
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -292,12 +292,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Level::EnergyRelay
   interactTextObject: {fileID: 8613138677983705843}
+  headCol: {fileID: 5971427874261358145}
   sourcePoint: {fileID: 4497985673329357432}
   focusable: {fileID: 7235016978208598594}
   sourceRadius: 15.7
-  dropTime: 1
-  sleepTimeBeforeActivation: 1
-  energyUpdateTime: 1
+  dropTime: 0.8
+  dropCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  sleepTimeBeforeActivation: 2
+  energyUpdateTime: 2
+  energyUpdateCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.007692308
+      inSlope: 2
+      outSlope: 3.2787693
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.056306306
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   sleepTimeAfterActivation: 2
 --- !u!135 &4424964456664278920
 SphereCollider:
