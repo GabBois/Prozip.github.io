@@ -101,7 +101,8 @@ GameObject:
   - component: {fileID: 2224521449997824866}
   - component: {fileID: 7340897946962893612}
   - component: {fileID: 1951384822648211019}
-  m_Layer: 8
+  - component: {fileID: 6685149286866603210}
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,8 +135,8 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.95962507, b: 0.7216981, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 0.49
+  m_Range: 4.7
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
@@ -173,7 +174,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -217,6 +218,21 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &6685149286866603210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3952665482895811235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8bca95f7c947b4db5fb152a0d693d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: com.cqf.urpvolumetricfog.runtime::VolumetricAdditionalLight
+  anisotropy: 0.3
+  scattering: 2.2
+  radius: 0.148
 --- !u!1 &3968615807715157807
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Level::EnergySource
   sourceRadius: 3.5
   sphereCol: {fileID: 6096508157531261678}
+  light: {fileID: 7340897946962893612}
   effectObject: {fileID: 7239097534865141388}
 --- !u!54 &8580818082817507299
 Rigidbody:
@@ -557,7 +574,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7866728841010438416}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: 2.266}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

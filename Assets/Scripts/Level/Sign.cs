@@ -87,4 +87,10 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
         anim.SetTrigger(CloseTriggerHash);
         canvasObject.SetActive(false);
     }
+
+    public void ShowProjectPanel(int _index)
+    {
+        Debug.Log("Show Project Panel");
+        MainUI.Instance.ShowProjectOverview(_index);
+    }
 }

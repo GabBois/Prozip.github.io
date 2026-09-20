@@ -6,6 +6,7 @@ public class EnergySource : MonoBehaviour
 {
     [SerializeField] private float sourceRadius;
     [SerializeField] private SphereCollider sphereCol;
+    [SerializeField] private Light light;
     [SerializeField] private Transform effectObject;
     private List<EnergyReceiver> energyReceiverList = new List<EnergyReceiver>();
 
@@ -14,21 +15,24 @@ public class EnergySource : MonoBehaviour
     
     private void Start()
     {
-        baseSourceRadius = sphereCol.radius;
         sphereCol.radius = sourceRadius;
+        baseSourceRadius = sphereCol.radius;
         effectObject.localScale = Vector3.one * sourceRadius*2f;
+        light.range = baseSourceRadius*2f;
     }
 
     public void UpdateSourceRadius(float _value)
     {
         sphereCol.radius = _value;
         effectObject.localScale = Vector3.one * _value*2f;
+        light.range = _value * 2f;
     }
 
     public void ResetSourceRadius()
     {
         sphereCol.radius = baseSourceRadius;
         effectObject.localScale = Vector3.one * baseSourceRadius*2f;
+        light.range = baseSourceRadius*2f;
     }
     
     private void OnTriggerEnter(Collider other)
