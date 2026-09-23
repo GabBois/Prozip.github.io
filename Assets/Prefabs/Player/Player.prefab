@@ -395,6 +395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Player::InteractionBehaviour
   rayPoint: {fileID: 7905616401828735314}
+  grabber: {fileID: 7543651921709845773}
   maxDistance: 1.72
   interactableLayer:
     serializedVersion: 2

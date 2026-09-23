@@ -13,6 +13,7 @@ public class PlayerGrabber : MonoBehaviour
     private Grabbable objectToGrab;
     public Grabbable ObjectToGrab => objectToGrab;
     private bool isGrabbing;
+    public bool IsGrabbing =>  isGrabbing;
 
     public void GetObjectToGrab(Grabbable _obj)
     {

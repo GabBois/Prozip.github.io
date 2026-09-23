@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class InteractionBehaviour : MonoBehaviour
 {
     [SerializeField] private Transform rayPoint;
+    [SerializeField] private PlayerGrabber grabber;
     
     [Header("Settings")] [SerializeField] private float maxDistance;
     [SerializeField] private LayerMask interactableLayer;
@@ -30,7 +31,7 @@ public class InteractionBehaviour : MonoBehaviour
         {
             triggeredIObject.Interact();
         }
-        if (interactable != null && activeIObject == null)
+        if (!grabber.IsGrabbing && interactable != null && activeIObject == null)
         {
             interactable.Interact();
             activeIObject = interactable;
