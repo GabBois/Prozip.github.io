@@ -2064,6 +2064,7 @@ GameObject:
   - component: {fileID: 573975995}
   - component: {fileID: 573975996}
   - component: {fileID: 573975997}
+  - component: {fileID: 573975998}
   m_Layer: 5
   m_Name: ProjectOverviewPanel
   m_TagString: Untagged
@@ -2107,11 +2108,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.UI::ProjectOverviewUI
   anim: {fileID: 0}
   volume: {fileID: 681353688}
+  worldCanvas: {fileID: 1904840970}
+  canvasGroup: {fileID: 573975998}
   projectPanelList:
   - {fileID: 1583760941}
   - {fileID: 1316339222}
   - {fileID: 1267741680}
   - {fileID: 779311426}
+  fadeInDuration: 1
+  onCancel:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 963194233}
+        m_TargetAssemblyTypeName: WorldButtonCensor, Game.Level
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &573975997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2142,6 +2161,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &573975998
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573975994}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &594765687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3247,6 +3278,7 @@ GameObject:
   - component: {fileID: 963194230}
   - component: {fileID: 963194231}
   - component: {fileID: 963194232}
+  - component: {fileID: 963194233}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3301,7 +3333,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1527
+    m_Bits: 3575
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3368,7 +3400,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -3421,6 +3453,23 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 11400000, guid: e4dd22ceb5a61e149871835ff8d13309, type: 2}
+--- !u!114 &963194233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62eec1bd3012ac64d868f17f1ba81c08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Level::WorldButtonCensor
+  cam: {fileID: 963194227}
+  maxDistance: 20
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &977516675
 GameObject:
   m_ObjectHideFlags: 0
@@ -5649,6 +5698,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
   m_Asset: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_ActionId: 24908448-c609-4bc3-a128-ea258674378a
+--- !u!223 &1904840970 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2798060486559167026, guid: 08573d902db00bd499fe82d9b6ee9ef7, type: 3}
+  m_PrefabInstance: {fileID: 4291734638532708341}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2011709805
 GameObject:
   m_ObjectHideFlags: 0
@@ -6518,6 +6572,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1078801500145850273, guid: 08573d902db00bd499fe82d9b6ee9ef7, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 963194233}
+    - target: {fileID: 1406826098028102402, guid: 08573d902db00bd499fe82d9b6ee9ef7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650195146410768888, guid: 08573d902db00bd499fe82d9b6ee9ef7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2798060486559167026, guid: 08573d902db00bd499fe82d9b6ee9ef7, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 963194227}
     - target: {fileID: 3741051777004593058, guid: 08573d902db00bd499fe82d9b6ee9ef7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.2

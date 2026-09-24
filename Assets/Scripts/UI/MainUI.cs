@@ -15,6 +15,7 @@ public class MainUI : MonoBehaviour
     private void Start()
     {
         InputModeController.Instance.closePanel += OnCancel;
+        projectOverviewUI.gameObject.SetActive(false);
     }
 
     private void OnDisable()

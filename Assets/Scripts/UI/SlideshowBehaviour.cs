@@ -3,47 +3,36 @@ using UnityEngine;
 
 public class SlideshowBehaviour : MonoBehaviour
 {
+    [SerializeField] private Sign sign;
     [SerializeField] private GameObject[] slideList;
     private int currentIndex = 0;
-
-    private void Start()
+    
+    private void OnEnable()
     {
-        foreach (GameObject slide in slideList)
+        sign.OnPanelChanged += UpdatePanel;
+        sign.OnPanelOpened += OpenPanel;
+        foreach (GameObject o in slideList)
         {
-            slide.SetActive(false);
+            o.SetActive(false);
         }
-        slideList[0].SetActive(true);
-    }
-
-    public void Next()
-    {
-        HideCurrentSlide();
-        currentIndex++;
-        if (currentIndex >= slideList.Length)
-        {
-            currentIndex = 0;
-        }
-        UpdateSlide();
-    }
-
-    public void Previous()
-    {
-        HideCurrentSlide();
-        currentIndex--;
-        if (currentIndex < 0)
-        {
-            currentIndex = slideList.Length - 1;
-        }
-        UpdateSlide();
-    }
-
-    void HideCurrentSlide()
-    {
-        slideList[currentIndex].SetActive(false);
     }
     
-    void UpdateSlide()
+    private void OpenPanel(int _index)
     {
+        MainUI.Instance.ShowProjectOverview(_index);
+    }
+
+    private void OnDisable()
+    {
+        sign.OnPanelChanged -= UpdatePanel;
+        sign.OnPanelOpened -= OpenPanel;
+    }
+
+    private void UpdatePanel(int _index)
+    {
+        slideList[currentIndex].SetActive(false);
+        currentIndex = _index;
         slideList[currentIndex].SetActive(true);
+        Debug.Log($"UpdatePanel {currentIndex}");
     }
 }

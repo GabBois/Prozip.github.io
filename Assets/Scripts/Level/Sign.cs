@@ -12,6 +12,7 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
     [SerializeField] private Animator anim;
     [SerializeField] private GameObject canvasObject;
     [SerializeField] private GameObject[] buttonObjects;
+    [SerializeField] private GameObject[] slideList;
 
     [SerializeField] private float waitBeforeOpenDuration;
     
@@ -20,11 +21,16 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
     readonly int IsActiveHash = Animator.StringToHash("IsActive");
 
     private bool isActive;
+
+    private int currentPanelIndex = 0;
+
+    public event Action<int> OnPanelChanged;
+    public event Action<int> OnPanelOpened;
     
     private void Start()
     {
         interactTextObject.SetActive(false);
-        canvasObject.SetActive(false);
+        
         foreach (GameObject o in buttonObjects)
         {
             o.SetActive(false);
@@ -32,10 +38,11 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
         
         isActive = isActiveByDefault;
         anim.SetBool(IsActiveHash, isActive);
+        OnPanelChanged?.Invoke(currentPanelIndex);
+        canvasObject.SetActive(false);
     }
 
-    public bool Cancelable { get; set; } = true;
-
+    #region IRECEIVER
     public void Activate()
     {
         isActive = true;
@@ -47,7 +54,10 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
         isActive = false;
         anim.SetBool(IsActiveHash, isActive);
     }
+    #endregion
     
+    #region IINTERACTABLE
+    public bool Cancelable { get; set; } = true;
     public void ShowInfos()
     {
         interactTextObject.SetActive(true);
@@ -69,6 +79,7 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
         GameEvents.TriggerInteractionStarted();
         Invoke(nameof(PlayOpen), waitBeforeOpenDuration);
     }
+    #endregion
 
     void PlayOpen()
     {
@@ -78,6 +89,7 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
     public void ShowCanvas()
     {
         canvasObject.SetActive(true);
+        OnPanelChanged?.Invoke(currentPanelIndex);
     }
 
     public void CancelInteraction()
@@ -88,9 +100,32 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
         canvasObject.SetActive(false);
     }
 
-    public void ShowProjectPanel(int _index)
+    public void NextPanel()
+    {
+        currentPanelIndex++;
+        if (currentPanelIndex >= buttonObjects.Length)
+        {
+            currentPanelIndex = 0;
+        }
+        OnPanelChanged?.Invoke(currentPanelIndex);
+        Debug.Log($"Next Panel {currentPanelIndex}");
+    }
+
+    public void PreviousPanel()
+    {
+        currentPanelIndex--;
+        if (currentPanelIndex < 0)
+        {
+            currentPanelIndex = buttonObjects.Length - 1;
+        }
+        OnPanelChanged?.Invoke(currentPanelIndex);
+        Debug.Log($"Previous Panel {currentPanelIndex}");
+    }
+    
+    public void ShowProjectPanel()
     {
         Debug.Log("Show Project Panel");
-        MainUI.Instance.ShowProjectOverview(_index);
+        OnPanelOpened?.Invoke(currentPanelIndex);
+        // MainUI.Instance.ShowProjectOverview(_index);
     }
 }
