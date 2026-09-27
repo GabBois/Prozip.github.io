@@ -34,6 +34,7 @@ public class URLLauncher : MonoBehaviour, IInteractable
     private IEnumerator OpenURL()
     {
         OnURLOpened?.Invoke();
+        PlayerCamReference.Instance.PlayZoom();
         yield return new WaitForSeconds(sleepTimeBeforeOpen);
         
         StartURL();
