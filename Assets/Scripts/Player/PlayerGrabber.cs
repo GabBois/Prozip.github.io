@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerGrabber : MonoBehaviour
 {
+    [SerializeField] private Animator anim;
     [SerializeField] private Transform grabPoint;
     [SerializeField] private float timeToTurnToObject;
     [SerializeField] private float sleepTimeBeforeGrab;
@@ -14,6 +15,8 @@ public class PlayerGrabber : MonoBehaviour
     public Grabbable ObjectToGrab => objectToGrab;
     private bool isGrabbing;
     public bool IsGrabbing =>  isGrabbing;
+    
+    readonly int isCarryingHash = Animator.StringToHash("IsCarrying");
 
     public void GetObjectToGrab(Grabbable _obj)
     {
@@ -84,6 +87,8 @@ public class PlayerGrabber : MonoBehaviour
         Transform objTransform = objectToGrab.transform;
         
         objectToGrab.EnableGrabbing();
+
+        anim.SetBool(isCarryingHash, true);
         
         float elapsedTime = 0f;
         while (elapsedTime < timeToGrab)
@@ -105,5 +110,7 @@ public class PlayerGrabber : MonoBehaviour
         objectToGrab.transform.parent = null;
         objectToGrab.DisableGrabbing();
         isGrabbing = false;
+        
+        anim.SetBool(isCarryingHash, false);
     }
 }
