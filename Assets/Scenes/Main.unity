@@ -6972,18 +6972,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6951824996905838432, guid: 0e4c5a975aa4da640aca14dc0a331533, type: 3}
-      propertyPath: gravity
-      value: -15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951824996905838432, guid: 0e4c5a975aa4da640aca14dc0a331533, type: 3}
-      propertyPath: moveSpeed
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951824996905838432, guid: 0e4c5a975aa4da640aca14dc0a331533, type: 3}
-      propertyPath: jumpHeight
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951824996905838432, guid: 0e4c5a975aa4da640aca14dc0a331533, type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 963194228}
@@ -7078,6 +7066,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 3202682497097542812, guid: 08573d902db00bd499fe82d9b6ee9ef7, type: 3}
+      propertyPath: OutputChannel
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3741051777004593058, guid: 08573d902db00bd499fe82d9b6ee9ef7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.2

@@ -31,11 +31,11 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
     {
         interactTextObject.SetActive(false);
         
-        foreach (GameObject o in buttonObjects)
-        {
-            o.SetActive(false);
-        }
-        
+        // foreach (GameObject o in buttonObjects)
+        // {
+        //     o.SetActive(false);
+        // }
+        //
         isActive = isActiveByDefault;
         anim.SetBool(IsActiveHash, isActive);
         OnPanelChanged?.Invoke(currentPanelIndex);
@@ -103,7 +103,7 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
     public void NextPanel()
     {
         currentPanelIndex++;
-        if (currentPanelIndex >= buttonObjects.Length)
+        if (currentPanelIndex >= slideList.Length)
         {
             currentPanelIndex = 0;
         }
@@ -116,7 +116,7 @@ public class Sign : MonoBehaviour, IInteractable, IReceiver
         currentPanelIndex--;
         if (currentPanelIndex < 0)
         {
-            currentPanelIndex = buttonObjects.Length - 1;
+            currentPanelIndex = slideList.Length - 1;
         }
         OnPanelChanged?.Invoke(currentPanelIndex);
         Debug.Log($"Previous Panel {currentPanelIndex}");
